@@ -9,6 +9,7 @@ lerna-debug.log*
 
 node_modules
 api/node_modules
+api/.env
 client/node_modules
 dist
 dist-ssr
