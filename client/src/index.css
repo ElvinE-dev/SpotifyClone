@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+body{
+    background: #000;
+}
+
+@theme {
+    --color-primary: #171717;
+    --color-secondary: #b0b0b0;
+    --color-tertiary: #252525;
+    --color-main: #1db954;
+}
+
+/* .album-container::-webkit-scrollbar{
+    display: none;
+} */
+
+.music-info-container::-webkit-scrollbar, .indexpage::-webkit-scrollbar, .modal-form::-webkit-scrollbar, .album-container::-webkit-scrollbar{
+    background-color: transparent;
+    width: 0.75rem;
+    z-index: 2;
+}
+
+.music-info-container::-webkit-scrollbar-thumb, .indexpage::-webkit-scrollbar-thumb, .modal-form::-webkit-scrollbar-thumb, .album-container::-webkit-scrollbar-thumb{
+    background-color: #252525;
+    width: 100%;
+}
+
+.music-range{
+    -webkit-appearance: none; /* Safari/Chrome */
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    background: transparent;
+}
+
+.music-range::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 999px;
+    cursor: pointer;
+    background-color: transparent;
+    margin-top: -4px;
+    z-index: 5;
+    position: relative;
+}
+
+.music-range:hover::-webkit-slider-thumb{
+    background-color:white;
+}
+
+.music-range:hover ~ .music-track{
+    background-color: #1db954;
+}
+
+.music-range::-webkit-slider-runnable-track{
+    background-color: transparent;
+    height: 4px;
+    border-radius:2px;
+    cursor: pointer;
+}
+
+.playlist::-webkit-scrollbar{
+    display: none;
+}
+
+#search:hover ~ .history-search{
+    display: block;
+}
+
+.history-search:hover{
+    display: block;
+}
+
+#header:has(#search:hover), #header:has(.history-search:hover) {
+    z-index: 999;
+}
