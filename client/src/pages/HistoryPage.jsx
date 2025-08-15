@@ -5,8 +5,9 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import debounce from "lodash.debounce";
 import { useMeasure } from "@uidotdev/usehooks";
 import axios from "axios";
-import { handleMenuPopup, handleModal, handleMusicPlay, handleQueueMusic } from "../utils";
+import { handleMenuPopup, handleModal, handleMusicPlay, handleQueueMusic, handleUpdateSearchHistory, registerSetSearchHistory } from "../utils";
 import { UserContext } from "../UserContext";
+import App from "../App";
 
 export default function HistoryPage(){
     const {setPosition} = useOutletContext();
@@ -17,6 +18,7 @@ export default function HistoryPage(){
     const [music, setMusic] = useState([])
     const [topResult, setTopResult] = useState({});
     const {ready, user} = useContext(UserContext);
+    const [searchHistory, setSearchHistory] = useState([])
 
     useEffect(() => {
             axios.get('/search/'+searchParam).then(res => {
@@ -24,6 +26,16 @@ export default function HistoryPage(){
                 setTopResult(res.data[0]);
             });
     }, [searchParam])
+
+    useEffect(() => {
+        if(user?.searchHistory){
+            setSearchHistory(user.searchHistory)
+        }
+    }, [user])
+
+    useEffect(() => {
+        registerSetSearchHistory(setSearchHistory);
+    }, [])
 
     const searchFunc = useCallback(
         debounce(
@@ -45,8 +57,16 @@ export default function HistoryPage(){
         return `${minute}:${second.toString().padStart(2, '0')}`
     }
 
-    function updateHistory(music){
-        axios.post('/update-search-history', {searchData:music})
+    function updateHistory(musicItem){
+
+        axios.post('/update-search-history', { searchData: musicItem })
+        .then(() => {
+            // Optionally re-fetch from server if you want to sync
+            return axios.get('/profile');
+        })
+        .then(res => {
+            handleUpdateSearchHistory(prev => [...prev, musicItem])
+        });
     }
     return(
         <div className="flex flex-col relative w-full h-fit" ref={ref}>
@@ -138,7 +158,7 @@ export default function HistoryPage(){
                     <div className="w-full h-full flex flex-col p-2 gap-4 mt-4">
                         <h1 className="text-xl font-bold text-white">Recent search</h1>
 
-                        {user.searchHistory.length > 0 && user.searchHistory.map((history, index) => (
+                        {searchHistory.length > 0 && searchHistory.map((history, index) => (
                         
                         <HistoryMusic data={history} key={index}/>
                         

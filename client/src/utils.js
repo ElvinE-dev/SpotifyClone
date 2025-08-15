@@ -6,6 +6,7 @@ let __registerSetMusicData = null;
 let __registerSetIsPlaying = null;
 let __registerSetQueue = null;
 let __registerSetQueueMusic = null;
+let __registerSetSearchHistory = null;
 
 export function handleMenuPopup(ev, setPosition) {
         ev.preventDefault()
@@ -20,8 +21,16 @@ export function handleMenuPopup(ev, setPosition) {
         }
 }
 
+export function registerSetSearchHistory(fn){
+    __registerSetSearchHistory = fn
+}
+
 export function registerSetFormVisible(fn){
     __registerSetFormVisible = fn;
+}
+
+export function handleUpdateSearchHistory(searchHistory){
+    __registerSetSearchHistory(searchHistory)
 }
 
 export function handleModal(formVisible, music){

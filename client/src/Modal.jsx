@@ -67,7 +67,7 @@ export default function Modal({formVisible, playlists}){
                     <div className="flex flex-col gap-4 sm:gap-2 overflow-y-auto modal-form">
                         <div className="flex items-center justify-between gap-4 flex-col sm:flex-row">
                             <label htmlFor="image-upload" className="h-45 aspect-square overflow-hidden flex items-center justify-center rounded-md shadow-[0_0_100px_rgba(0,0,0,0.4)]">
-                                <img src="https://picsum.photos/200/300" alt="" className="object-cover"/>
+                                <img src="http://localhost:4000/uploads/playlist/default.jpg" alt="" className="object-cover"/>
                             </label>
 
                             <input type="file" onChange={(ev) =>{setFile([ev.target.files[0]])}} name="playlist" id="image-upload" hidden/>
@@ -88,11 +88,12 @@ export default function Modal({formVisible, playlists}){
         }else if(formVisible === 'playlists'){
             return(
                 <form onSubmit={addIntoPlaylist} encType="multipart/form-data" className=" w-11/12 sm:w-130 h-130 sm:h-105 bg-primary z-12 text-white flex p-4 flex-col gap-4 justify-around">
-                    <select name="" id="" className="bg-tertiary" onChange={(ev) => {
+                    <select name="" id="" className="bg-tertiary"  onChange={(ev) => {
                         setSelectedPlaylist(ev.target.value)
                         console.log(ev.target.value)
                         console.log(queueMusic)
                     }}>
+                        <option value="" disabled selected>Choose One</option>
                         
                         {playlists.length && playlists.map(playlist => (
                             <option value={playlist._id}>{playlist.name}</option>

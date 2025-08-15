@@ -34,7 +34,7 @@ export default function LoginPage(){
     }
     return (
         <div className="w-screen h-screen bg-gradient-to-b from-tertiary to-black text-white p-8 flex items-center justify-center">
-            <div className="px-40 py-8 bg-primary rounded-md">
+            <div className=" px-4 sm:px-10 md:px-40 py-8 bg-primary rounded-md">
                 <div className="flex items-center justify-center flex-col gap-10 w-90 ">
                     <div className="w-full flex flex-col gap-8">
                         <div className="flex items-center flex-col justify-center gap-4">
@@ -46,7 +46,7 @@ export default function LoginPage(){
                             <p className="font-bold text-4xl">Login to Spotify</p>
                         </div>
 
-                        <div className="flex flex-col gap-2 w-full">
+                        {/* <div className="flex flex-col gap-2 w-full">
                             <button className="px-6 py-2 border border-white rounded-full w-full">
                                 <div>
 
@@ -75,7 +75,7 @@ export default function LoginPage(){
 
                                 <p>Login using phone number</p>
                             </button>
-                        </div>
+                        </div> */}
                     </div>
 
                     <span className="w-full h-[1px] bg-secondary"></span>

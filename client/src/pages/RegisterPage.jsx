@@ -9,6 +9,7 @@ export default function RegisterPage(){
     const [phase, setPhase] = useState('start');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [redirect, setRedirect] = useState(false)
     const [username, setUsername] = useState('');
     const [gender, setGender] = useState('');
 
@@ -23,10 +24,14 @@ export default function RegisterPage(){
             const {data} = await axios.post('/register', {username, email, gender, password})
 
             setUser(data)
-            navigate('/')
+            setRedirect(true);
         }catch(err){
             console.log(err)
         }
+    }
+
+    if(redirect){
+        return window.location.href = '/';
     }
 
     return (

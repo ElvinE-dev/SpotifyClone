@@ -19,7 +19,7 @@ const storage = multer.diskStorage({
             folder = './uploads/playlist/'
         }else if(file.fieldname === 'profile'){
             folder = './uploads/profile/'
-        }
+        } 
 
         cb(null, folder)
     },
@@ -169,6 +169,25 @@ app.post('/update-search-history', async function(req,res){
         res.json(newUserData);
     }else{
         res.json('EXISTED')
+    }
+
+})
+
+app.post('/delete-from-history', async function(req,res){
+    const {musicId} = req.body;
+
+    const userId = await getUserIdViaToken(req);
+
+    if(!userId) return ;
+
+    const userData = await User.findById(userId);
+
+    if(userData.searchHistory.length > 0){
+        userData.searchHistory = userData.searchHistory.filter(val => val.toString() !== musicId.toString())
+        await userData.save();
+        res.json(userData)
+    }else{
+        res.status(422).json('unable to process request')
     }
 
 })

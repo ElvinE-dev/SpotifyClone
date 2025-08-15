@@ -72,7 +72,7 @@ export default function Dropdown({position, onClick, music}){
                         <div className="w-full bg-secondary/15 h-[1px]"></div>
 
                         <button onClick={() => {
-                            copyToClipboard('http://localhost:5173/music/'+music._id)
+                            copyToClipboard('http://localhost:5173/music/'+queueMusic._id)
                         }} className="w-full h-10 flex items-center gap-4 hover:bg-secondary/10 rounded-sm px-1 py-2">
                             <div>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
