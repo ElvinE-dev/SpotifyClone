@@ -1,12 +1,31 @@
-# React + Vite
+# Spotifyclone 🎵
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Clone aplikasi Spotify yang dibangun menggunakan **MERN Stack** (MongoDB, Express.js, React.js, Node.js). Project ini dibuat sebagai eksplorasi pengembangan aplikasi streaming musik fullstack, mulai dari sisi autentikasi user, manajemen playlist, hingga sistem antrian pemutaran musik.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Frontend**
+- React.js (React Router untuk navigasi)
+- Tailwind CSS untuk styling
+- Axios untuk komunikasi API
+- Context API untuk state management (User, Music, dll)
 
-## Expanding the ESLint configuration
+**Backend**
+- Node.js + Express.js
+- MongoDB (Mongoose) sebagai database
+- JWT untuk autentikasi
+- Multer untuk handle upload file (gambar profil, thumbnail playlist, file musik)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Fitur
+
+- 🔍 **Search** — mencari musik berdasarkan judul, dengan riwayat pencarian
+- ▶️ **Music Player** — pemutaran musik dengan kontrol next/previous
+- 📋 **Queue System** — antrian lagu yang bisa diatur sebelum diputar
+- 🎶 **Playlist** — membuat dan mengelola playlist pribadi
+- 👤 **User Profile** — manajemen profil pengguna (foto, deskripsi)
+- 🔐 **Autentikasi** — sistem login/register dengan JWT
+- 📊 **Play Count** — pelacakan jumlah berapa kali sebuah lagu telah diputar
+
+---
+
+*Dibuat sebagai bagian dari proses belajar pengembangan web fullstack.*

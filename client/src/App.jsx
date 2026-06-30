@@ -33,10 +33,8 @@ function App() {
             <Route path='/playlist' element={<CollectionPage />} />
             <Route path='/playlist/:playlistId' element={<PlaylistPage />} />
             <Route path='/admin' element={<AdminPage />}/>
-            <Route path='/search' element={<SearchPage />} />
             <Route path='/search/recent' element={<HistoryPage />} />
             <Route path='/search/recent/:searchParam' element={<HistoryPage />} />
-            <Route path='/genre/:genre' element={<GenrePage />} />
             <Route path='/artist/:artistId' element={<ArtistPage />} />
           </Route>
 
