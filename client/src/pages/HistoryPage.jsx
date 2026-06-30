@@ -71,11 +71,11 @@ export default function HistoryPage(){
     return(
         <div className="flex flex-col relative w-full h-fit" ref={ref}>
                 <form action="" className="sticky top-0 bg-tertiary text-secondary p-2 w-full sm:hidden  h-[50px] flex items-center gap-2 z-1">
-                    <Link to={'/search'} className="text-white w-1/12">
+                    {/* <Link to={'/search/recent'} className="text-white w-1/12">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
                             <path fillRule="evenodd" d="M11.03 3.97a.75.75 0 0 1 0 1.06l-6.22 6.22H21a.75.75 0 0 1 0 1.5H4.81l6.22 6.22a.75.75 0 1 1-1.06 1.06l-7.5-7.5a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 0 1 1.06 0Z" clipRule="evenodd" />
                         </svg>
-                    </Link>
+                    </Link> */}
                     <input type="text" onChange={(ev) => {searchFunc(ev)}} placeholder="What do you want to listen to" className="w-11/12 outline-0"/>
                 </form>
 
