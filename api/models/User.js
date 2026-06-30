@@ -4,7 +4,10 @@ const {Schema} = mongoose
 
 const UserSchema = new Schema({
     username: String,
-    password: String,
+    password: {
+        type: String,
+        select: false 
+    },
     profilePath: String,
     description: String,
     searchHistory: [

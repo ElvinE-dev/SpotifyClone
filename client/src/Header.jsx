@@ -59,7 +59,7 @@ export default function Header(){
                         }}/> 
                     
                     <div className="history-search w-full h-fit absolute top-10 bg-tertiary rounded-sm shadow-xl hidden">
-                        {user.searchHistory.length > 0 && user.searchHistory.map((history, index) => {
+                        {user?.searchHistory?.length > 0 && user.searchHistory.map((history, index) => {
                             
                             if(index > 2){
                                 return ;

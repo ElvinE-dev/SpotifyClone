@@ -4,14 +4,16 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "./UserContext";
 import { Navigate } from "react-router-dom";
 import { MusicContext } from "./MusicContext";
+import Playlist from "./components/Playlist";
 
 export default function Modal({formVisible, playlists}){
 
     const [name, setName]= useState('');
     const [description, setDescription] = useState('');
-    const {user,ready} = useContext(UserContext);
+    const {setUser,user,ready} = useContext(UserContext);
     const {music, queueMusic} = useContext(MusicContext);
     const [file, setFile] = useState([]);
+    const [objectURL, setObjectURL] = useState('')
 
     const [profile, setProfile] = useState([]);
 
@@ -26,28 +28,31 @@ export default function Modal({formVisible, playlists}){
 
     function createPlaylist(ev){
         ev.preventDefault();
+        handleModal('')
 
         axios.post('/create-playlist', {name, description, maker:user._id, playlist:file[0]}, {
             headers: {
                 'Content-Type' : 'multipart/form-data'
             }
-        })
+        }).then(res => window.location.href = window.location.pathname);
     }
 
     function addIntoPlaylist(ev){
         ev.preventDefault();
+        handleModal('')
 
-        axios.post('/add-to-playlist', {selectedPlaylist, music:queueMusic})
+        axios.post('/add-to-playlist', {selectedPlaylist, music:queueMusic}).then(res => window.location.href = window.location.pathname);
     }
 
     function updateUser(ev){
         ev.preventDefault();
+        handleModal('')
 
         axios.post('/update-profile', {profile:profile[0], userDescription}, {
             'headers' : {
                 'Content-Type' : 'multipart/form-data'
             }
-        });
+        }).then(res => window.location.href = window.location.pathname);
     }
 
     function setForm(formVisible){
@@ -67,7 +72,7 @@ export default function Modal({formVisible, playlists}){
                     <div className="flex flex-col gap-4 sm:gap-2 overflow-y-auto modal-form">
                         <div className="flex items-center justify-between gap-4 flex-col sm:flex-row">
                             <label htmlFor="image-upload" className="h-45 aspect-square overflow-hidden flex items-center justify-center rounded-md shadow-[0_0_100px_rgba(0,0,0,0.4)]">
-                                <img src="http://localhost:4000/uploads/playlist/default.jpg" alt="" className="object-cover"/>
+                                <img id="playlistImage" src={file[0] ? URL.createObjectURL(file[0]) : "http://localhost:4000/uploads/playlist/default.jpg"} alt="" className="object-cover"/>
                             </label>
 
                             <input type="file" onChange={(ev) =>{setFile([ev.target.files[0]])}} name="playlist" id="image-upload" hidden/>
@@ -87,8 +92,31 @@ export default function Modal({formVisible, playlists}){
             )
         }else if(formVisible === 'playlists'){
             return(
-                <form onSubmit={addIntoPlaylist} encType="multipart/form-data" className=" w-11/12 sm:w-130 h-130 sm:h-105 bg-primary z-12 text-white flex p-4 flex-col gap-4 justify-around">
-                    <select name="" id="" className="bg-tertiary"  onChange={(ev) => {
+                <form onSubmit={addIntoPlaylist} encType="multipart/form-data" className=" w-11/12 sm:w-130 h-130 sm:h-105 bg-primary z-12 text-white flex p-4 flex-col gap-4">
+                    <h3>Choose one Playlist</h3>
+
+                    <div className="w-full h-full">
+                    {playlists.length && playlists.map((playlist, index) => (
+                        <label for={`playlist-select${index}`} className=" cursor-pointer flex justify-between items-center hover:bg-tertiary p-2 rounded-md">
+
+                            <div to={'/playlist/'+playlist._id} className="flex items-center gap-2  w-full">
+                                <div className="flex w-15 h-15 aspect-square overflow-hidden rounded-md shrink-0">
+                                    <img className="object-cover w-full h-full" src={playlist.thumbnailPath ? "http://localhost:4000/"+playlist.thumbnailPath : "http://localhost:4000/uploads/playlist/default.jpg"} alt="" />
+                                </div>
+
+                                <div className={'block'}>
+                                    <h3 className="text-white select-none">{playlist.name}</h3>
+                                    <p className="text-secondary text-sm select-none">{playlist.musics.length} songs • {playlist.maker.username}</p>
+                                </div>
+                            </div>
+
+                            <input type="radio" onChange={() => {setSelectedPlaylist(playlist._id)}} name="playlist-select" id={`playlist-select${index}`} />
+                        </label>
+                    ))}
+                    </div>
+
+
+                    {/* <select name="" id="" className="bg-tertiary"  onChange={(ev) => {
                         setSelectedPlaylist(ev.target.value)
                         console.log(ev.target.value)
                         console.log(queueMusic)
@@ -98,21 +126,29 @@ export default function Modal({formVisible, playlists}){
                         {playlists.length && playlists.map(playlist => (
                             <option value={playlist._id}>{playlist.name}</option>
                         ))}
-                    </select>
+                    </select> */}
 
                     <button className="px-4 py-2 bg-white text-tertiary w-fit rounded-full">Save</button>
                 </form>
             )
         }else if(formVisible === 'profile'){
             return(
-                <form encType="multipart/form-data" onSubmit={updateUser} className=" w-11/12 sm:w-130 h-130 sm:h-105 bg-primary z-12 text-white flex p-4 flex-col gap-4 justify-around">
+                <form encType="multipart/form-data" onSubmit={updateUser} className=" w-11/12 sm:w-130 h-130 sm:h-105 bg-primary z-12 text-white flex p-4 flex-col gap-4 justify-around ">
 
                     <p>PROFILE</p>
 
-                    <div className="w-full flex">
-                        <input type="file" className="px-4 py-2 border border-secondary rounded-sm" name="profile" id="" onChange={(ev) => {setProfile([ev.target.files[0]])}} />
+                    <div className="flex items-center justify-between gap-4 flex-col">
+                        <label htmlFor="image-upload" className="h-45 aspect-square overflow-hidden flex items-center justify-center rounded-md shadow-[0_0_100px_rgba(0,0,0,0.4)]">
+                            <img id="playlistImage" src={profile[0] ? URL.createObjectURL(profile[0]) : "http://localhost:4000/uploads/playlist/default.jpg"} alt="" className="object-cover object-center"/>
+                        </label>
+
+                        <input type="file" onChange={(ev) =>{setProfile([ev.target.files[0]])}} name="profile" id="image-upload" hidden/>
+                    </div>
+                    <div className="w-full flex flex-col">
+                        <p className="mb-2">Edit Description</p>
                         <textarea type="text" className="px-4 py-2 border border-secondary rounded-sm resize-none" onChange={(ev) => {setUserDescription(ev.target.value)}}/>
                     </div>
+
 
                     <button className="px-4 py-2 bg-white text-tertiary w-fit rounded-full">Save</button>
                 </form>

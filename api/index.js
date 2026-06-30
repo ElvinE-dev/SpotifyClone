@@ -44,21 +44,21 @@ require('dotenv').config() //Buat bisa akses env kalau tak ada ini, baris dibawa
 //ctVStVe0mChpat21
 //blabblub303
 mongoose.connect(process.env.MONGO_URL)
+ 
 
-
-async function getUserIdViaToken(req){
+async function getUserIdViaToken(req){ 
     const {token} = req.cookies
     if(!token) return;
     const userId = jwt.verify(token, jwtSecret, {}, async function(err, data) {
 
         return data.id;
-    })
+    }) 
 
-    return userId
+    return userId 
 }
 
 app.get('/test', function(req, res) {
-    res.json('hai')
+    res.json('hai') 
 })
 
 app.get('/onplaying', async function(req,res){
